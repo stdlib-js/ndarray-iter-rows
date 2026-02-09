@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2023 The Stdlib Authors.
@@ -16,17 +16,41 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
+
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@esm/index.d.ts"/>
+
+import { TypedIterator, TypedIterableIterator } from '@stdlib/types/iter';
+import { typedndarray } from '@stdlib/types/ndarray';
+
+// Define a union type representing both iterable and non-iterable iterators:
+type Iterator<T> = TypedIterator<T> | TypedIterableIterator<T>;
 
 /**
-* Create an iterator which iterates over each row in a matrix (or stack of matrices).
+* Interface defining function options.
+*/
+interface Options {
+	/**
+	* Boolean indicating whether returned views should be read-only (default: true).
+	*
+	* ## Notes
+	*
+	* -   If the input array is read-only, setting this option to `false` raises an exception.
+	*/
+	readonly?: boolean;
+}
+
+/**
+* Returns an iterator which iterates over each row in a matrix (or stack of matrices).
 *
-* @module @stdlib/ndarray-iter-rows
+* @param x - input value
+* @param options - function options
+* @param options.readonly - boolean indicating whether returned views should be read-only
+* @returns iterator
 *
 * @example
 * var array = require( '@stdlib/ndarray-array' );
 * var ndarray2array = require( '@stdlib/ndarray-to-array' );
-* var nditerRows = require( '@stdlib/ndarray-iter-rows' );
 *
 * var x = array( [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 5, 6 ], [ 7, 8 ] ] ] );
 * // returns <ndarray>
@@ -53,12 +77,9 @@
 *
 * // ...
 */
-
-// MODULES //
-
-var main = require( './main.js' );
+declare function nditerRows<T = unknown>( x: typedndarray<T>, options?: Options ): Iterator<typedndarray<T>>;
 
 
 // EXPORTS //
 
-module.exports = main;
+export = nditerRows;
